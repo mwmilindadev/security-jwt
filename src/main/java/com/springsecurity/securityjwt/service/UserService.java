@@ -5,6 +5,7 @@ import com.springsecurity.securityjwt.entity.User;
 import com.springsecurity.securityjwt.repository.RoleRepository;
 import com.springsecurity.securityjwt.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -17,6 +18,9 @@ public class UserService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public User registerUser(User user) {
         return userRepository.save(user);
@@ -42,7 +46,7 @@ public class UserService {
         if(!userRepository.existsById("admin123")) {
             User user = new User();
             user.setUaserName("admin123");
-            user.setUserPassword("admin123");
+            user.setUserPassword(getEncorder("admin123"));
             user.setUserFirstName("Adminadmin");
             user.setUserLastName("indika");
             Set<Role> adminRoles = new HashSet<>();
@@ -56,7 +60,7 @@ public class UserService {
 
             User user = new User();
             user.setUaserName("user123");
-            user.setUserPassword("user123");
+            user.setUserPassword(getEncorder("user123"));
             user.setUserFirstName("useruser");
             user.setUserLastName("indika");
             Set<Role> userRoles = new HashSet<>();
@@ -66,6 +70,11 @@ public class UserService {
             userRepository.save(user);
 
         }
+
+    }
+
+    public String getEncorder(String password){
+        return passwordEncoder.encode(password);
 
     }
 }

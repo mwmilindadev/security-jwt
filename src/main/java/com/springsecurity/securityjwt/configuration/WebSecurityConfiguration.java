@@ -20,9 +20,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-@Bean
+
 @Override
-    public AuthenticationManager authenticationManager() throws Exception {
+@Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
 
     }
@@ -30,7 +31,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
        protected void configure(HttpSecurity http) throws Exception {
 
         http.cors().and().csrf().disable()
-                .authorizeRequests().antMatchers("/authenticate","/user/register-new-user").permitAll()
+                .authorizeRequests().antMatchers("/authentication","/user/register-new-user").permitAll()
                 .antMatchers(HttpHeaders.ALLOW).permitAll()
                 .anyRequest().authenticated()
                 .and()

@@ -17,7 +17,7 @@ public class LoginController {
     @PostMapping({"/authentication"})
 
     public LoginResponce createJwtTokenAndLogin(@RequestBody LoginRequest loginRequest) throws Exception{
-        System.out.println("Test");
+        //System.out.println("Test123456");
         return jwtService.createJwtToken(loginRequest);
 
     }

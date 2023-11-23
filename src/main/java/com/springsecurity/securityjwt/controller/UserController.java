@@ -4,6 +4,7 @@ import com.springsecurity.securityjwt.entity.User;
 import com.springsecurity.securityjwt.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
@@ -26,12 +27,15 @@ public class UserController {
         userService.initRoleAndUser();
     }
 
-    @GetMapping({"for-admin"})
+    @GetMapping({"/for-admin"})
+    @PreAuthorize("hasRole('Admin')")
     public String forAdmin(){
         return "This is admin";
     }
 
-    @GetMapping({"for-user"})
+    @GetMapping({"/for-user"})
+    //@PreAuthorize("hasRole('User')")
+    @PreAuthorize("hasAnyRole('User','Admin')")//can login to user and admin
     public String forUser(){
         return "This is user";
     }
